@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#171714">
+<title>سنتر أم درمان | متجر الجزارة</title>
+<style>
+:root{--bg:#f6f4ef;--ink:#211f1a;--dark:#171714;--gold:#d6ad59;--muted:#77736b;--line:#e8e2d7;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif}
+header{background:linear-gradient(135deg,#171714,#343027);color:#fff;padding:28px 18px 24px;text-align:center}
+.brand{font-size:13px;color:#e6c77f;letter-spacing:1px}.logo{font-size:30px;font-weight:800;margin:8px 0}.sub{color:#e4dfd4;font-size:14px}
+.pill{display:inline-block;margin-top:14px;border:1px solid #8b7544;color:#f0d99f;border-radius:30px;padding:7px 14px;font-size:12px}
+.wrap{max-width:980px;margin:auto;padding:18px 14px 100px}.notice{background:#fff8e8;border:1px solid #f0dfb8;border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.8;margin-bottom:18px}
+h2{font-size:19px;margin:22px 0 12px}.categories{display:flex;gap:8px;overflow:auto;padding-bottom:8px}.categories button{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:24px;padding:9px 14px;color:var(--ink);font:inherit;font-size:13px}
+.categories button.active{background:var(--dark);color:#fff;border-color:var(--dark)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.product{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;min-height:160px}
+.product .emoji{font-size:30px;background:#f7f2e8;border-radius:12px;width:52px;height:52px;display:grid;place-items:center;margin-bottom:10px}
+.name{font-weight:700;font-size:15px}.unit{font-size:12px;color:var(--muted);margin-top:5px}.price{font-weight:800;color:#76551a;margin:12px 0}
+.add{margin-top:auto;background:var(--dark);color:#fff;border:0;border-radius:10px;padding:10px;font:inherit;font-weight:700}
+.add:active{transform:scale(.98)}.cartbar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:12px max(14px,calc((100vw - 950px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 -5px 20px #0000000b}
+.cartbar small{display:block;color:var(--muted);margin-top:4px}.checkout{background:#16834a;color:#fff;border:0;border-radius:12px;padding:13px 18px;font:inherit;font-weight:700}
+.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:18px}.cartrow{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:10px 0;gap:10px}.qty{display:flex;align-items:center;gap:9px}.qty button{border:1px solid var(--line);background:#faf9f6;border-radius:8px;width:28px;height:28px;font-size:18px}
+input,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px;background:#fff}
+label{display:block;font-size:13px;margin:12px 0 5px}.choice{display:flex;gap:16px;flex-wrap:wrap;font-size:14px}.choice label{display:flex;align-items:center;gap:6px}.choice input{width:auto;margin:0}
+.muted{font-size:12px;color:var(--muted);line-height:1.8}.hidden{display:none}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:22px 10px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.logo{font-size:36px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">اللحوم والمنتجات السودانية</div>
+  <div class="logo">سنتر أم درمان</div>
+  <div class="sub">جودة تختارها… وطلبك يصلك لحد بابك</div>
+  <div class="pill">طلبات وتوصيل واستلام من المحل</div>
+</header>
+<main class="wrap">
+  <div class="notice">📍 <b>عنوان المحل:</b> حدائق الأهرام، البوابة، شارع 5 أ، عمارة 580 – الجيزة<br>📞 <b>الطلبات:</b> 01104961742</div>
+  <h2>تسوّق من أقسام الجزارة</h2>
+  <div class="categories" id="categories">
+    <button class="active" data-cat="all">كل المنتجات</button><button data-cat="lamb">لحوم ضأن</button><button data-cat="veal">لحوم عجل</button><button data-cat="offal">الكبدة والأحشاء</button><button data-cat="prepared">منتجات وتجهيزات</button>
+  </div>
+  <h2>المنتجات والأسعار</h2>
+  <div class="grid" id="products"></div>
+  <section class="panel" id="cart">
+    <h2 style="margin-top:0">🛒 سلة مشترياتك</h2>
+    <div id="cartItems" class="muted">السلة فارغة حالياً. أضف المنتجات التي تريدها.</div>
+    <div style="display:flex;justify-content:space-between;font-weight:800;margin-top:14px"><span>الإجمالي</span><span id="total">0 جنيه</span></div>
+  </section>
+  <section class="panel">
+    <h2 style="margin-top:0">تأكيد الطلب</h2>
+    <label>الاسم</label><input id="customer" placeholder="اكتب اسمك">
+    <label>رقم الهاتف</label><input id="phone" inputmode="tel" placeholder="رقم للتواصل">
+    <label>طريقة الاستلام</label>
+    <div class="choice"><label><input type="radio" name="method" value="توصيل للعنوان" checked> توصيل للعنوان</label><label><input type="radio" name="method" value="استلام من المحل"> استلام من المحل</label></div>
+    <label>العنوان (للتوصيل)</label><textarea id="address" rows="2" placeholder="المنطقة، الشارع، رقم العقار، وأي علامة مميزة"></textarea>
+    <label>ملاحظات إضافية</label><textarea id="notes" rows="2" placeholder="مثلاً: طريقة التقطيع أو التجهيز"></textarea>
+    <button class="checkout" style="width:100%;margin-top:12px" onclick="sendOrder()">إرسال الطلب عبر واتساب</button>
+    <p class="muted">سيتم فتح واتساب برسالة تحتوي على تفاصيل طلبك لمراجعتها وإرسالها.</p>
+  </section>
+  <footer>سنتر أم درمان · حدائق الأهرام – البوابة – شارع 5 أ – عمارة 580</footer>
+</main>
+<div class="cartbar"><div><b id="barCount">0 منتج</b><small id="barTotal">الإجمالي: 0 جنيه</small></div><button class="checkout" onclick="document.getElementById('cart').scrollIntoView({behavior:'smooth'})">عرض السلة</button></div>
+<script>
+const products=[
+{id:1,name:"لحم ضأن",unit:"للكيلو",price:600,cat:"lamb",emoji:"🥩"},
+{id:2,name:"لحم عجل بدون عظم",unit:"للكيلو",price:500,cat:"veal",emoji:"🥩"},
+{id:3,name:"لحم عجل بالعظم",unit:"للكيلو",price:450,cat:"veal",emoji:"🍖"},
+{id:4,name:"لحم مفروم",unit:"للكيلو",price:500,cat:"veal",emoji:"🥩"},
+{id:5,name:"كبدة ضأن",unit:"للكيلو",price:600,cat:"offal",emoji:"🍖"},
+{id:6,name:"كبدة عجل",unit:"للكيلو",price:500,cat:"offal",emoji:"🍖"},
+{id:7,name:"أم فتفت",unit:"للطبق",price:50,cat:"prepared",emoji:"🍲"},
+{id:8,name:"كوارع",unit:"للطلب",price:400,cat:"offal",emoji:"🍲"},
+{id:9,name:"كونيه",unit:"للطلب",price:300,cat:"prepared",emoji:"🍲"}
+];
+let cart={};let active="all";
+const money=n=>new Intl.NumberFormat("ar-EG").format(n)+" جنيه";
+function renderProducts(){document.getElementById("products").innerHTML=products.filter(p=>p.enabled!==false&&(active==="all"||p.cat===active)).map(p=>`<article class="product"><div class="emoji">${p.emoji}</div><div class="name">${p.name}</div><div class="unit">${p.unit}</div><div class="price">${money(p.price)}</div><button class="add" onclick="add(${p.id})">＋ أضف للسلة</button></article>`).join("")}
+function add(id){cart[id]=(cart[id]||0)+1;renderCart()}
+function change(id,d){cart[id]+=d;if(cart[id]<=0)delete cart[id];renderCart()}
+function renderCart(){let entries=Object.entries(cart);let count=entries.reduce((s,[,q])=>s+q,0);let total=entries.reduce((s,[id,q])=>s+products.find(p=>p.id==id).price*q,0);
+document.getElementById("cartItems").innerHTML=entries.length?entries.map(([id,q])=>{let p=products.find(x=>x.id==id);return `<div class="cartrow"><div><b>${p.name}</b><div class="muted">${money(p.price)} · ${p.unit}</div></div><div class="qty"><button onclick="change(${id},-1)">−</button><b>${q}</b><button onclick="change(${id},1)">＋</button></div><b>${money(p.price*q)}</b></div>`}).join(""):'السلة فارغة حالياً. أضف المنتجات التي تريدها.';
+document.getElementById("total").textContent=money(total);document.getElementById("barTotal").textContent="الإجمالي: "+money(total);document.getElementById("barCount").textContent=count+" منتج"}
+function sendOrder(){let entries=Object.entries(cart);if(!entries.length){alert("أضف منتجاً واحداً على الأقل إلى السلة.");return}
+let name=document.getElementById("customer").value.trim(),phone=document.getElementById("phone").value.trim(),method=document.querySelector('input[name="method"]:checked').value,address=document.getElementById("address").value.trim(),notes=document.getElementById("notes").value.trim();
+if(!name||!phone){alert("من فضلك اكتب الاسم ورقم الهاتف.");return}if(method==="توصيل للعنوان"&&!address){alert("من فضلك اكتب عنوان التوصيل.");return}
+let lines=entries.map(([id,q])=>{let p=products.find(x=>x.id==id);return `• ${p.name}: ${q} (${p.unit}) = ${p.price*q} جنيه`});
+let total=entries.reduce((s,[id,q])=>s+products.find(p=>p.id==id).price*q,0);
+let msg=`طلب جديد من متجر سنتر أم درمان%0Aالاسم: ${name}%0Aالهاتف: ${phone}%0Aطريقة الاستلام: ${method}%0A${method==="توصيل للعنوان"?"العنوان: "+address+"%0A":""}%0Aالمنتجات:%0A${lines.join("%0A")}%0A%0Aالإجمالي: ${total} جنيه%0Aملاحظات: ${notes||"لا توجد"}`;
+window.open("https://wa.me/201104961742?text="+encodeURIComponent(decodeURIComponent(msg)),"_blank")}
+document.querySelectorAll(".categories button").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".categories button").forEach(x=>x.classList.remove("active"));b.classList.add("active");active=b.dataset.cat;renderProducts()}));
+renderProducts();renderCart();
+</script>
+
+<style>
+.admin-launch{display:block;margin:18px auto 0;background:#27231b;color:#f0d58f;border:1px solid #9a7836;border-radius:10px;padding:11px 18px;font:inherit}
+.admin-panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:18px}
+.admin-panel input[type=password],.admin-panel input[type=number]{max-width:100%}
+.admin-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.admin-actions button{border:1px solid var(--line);background:#f7f4ee;border-radius:9px;padding:9px 12px;font:inherit}
+.admin-product{display:grid;grid-template-columns:1fr 95px 80px;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+.admin-product input{margin:0;padding:8px}
+.admin-note{background:#fff7e5;padding:10px;border-radius:10px;color:#66522a;font-size:12px;line-height:1.8}
+</style>
+<button class="admin-launch" onclick="document.getElementById('admin').classList.toggle('hidden')">⚙️ لوحة إدارة المتجر</button>
+<section class="admin-panel hidden" id="admin">
+ <h2 style="margin-top:0">لوحة إدارة سنتر أم درمان</h2>
+ <div class="admin-note">هذه نسخة تجريبية تحفظ التعديلات على هذا المتصفح والجهاز فقط. تسجيل الدخول هنا ليس حماية خادمية؛ قبل استقبال طلبات العملاء فعلياً سنربطها بخادم وقاعدة بيانات وتسجيل دخول آمن.</div>
+ <div id="adminLogin">
+  <label>رمز الدخول التجريبي</label><input id="adminPin" type="password" placeholder="أدخل الرمز التجريبي">
+  <button class="checkout" style="margin-top:10px" onclick="adminLogin()">دخول</button>
+ </div>
+ <div id="adminContent" class="hidden">
+  <div class="admin-actions">
+   <button onclick="adminTab('manage')">المنتجات والأسعار</button>
+   <button onclick="adminTab('orders')">الطلبات</button>
+   <button onclick="adminTab('stats')">ملخص المتجر</button>
+  </div>
+  <div id="adminManage">
+   <h3>إدارة المنتجات</h3><div id="adminProducts"></div>
+   <button class="checkout" style="margin-top:12px" onclick="saveAdminProducts()">حفظ الأسعار والتوفر</button>
+   <p class="muted">يمكن تعديل السعر أو إيقاف المنتج من الظهور في المتجر. التغييرات محفوظة محلياً في هذا المتصفح.</p>
+  </div>
+  <div id="adminOrders" class="hidden">
+   <h3>الطلبات</h3><p class="muted">في النسخة التجريبية لا تصل طلبات الزبائن تلقائياً إلى هذه اللوحة؛ الطلبات تُرسل إلى واتساب. سنربط الطلبات بلوحة الإدارة عند إعداد الخادم.</p>
+  </div>
+  <div id="adminStats" class="hidden">
+   <h3>ملخص المتجر</h3><p id="adminSummary"></p>
+  </div>
+ </div>
+</section>
+<script>
+
+const ADMIN_DEMO_PIN="2580";
+let adminProducts=JSON.parse(localStorage.getItem("omdurman_products")||"null")||products.map(p=>({...p,enabled:true}));
+function adminLogin(){if(document.getElementById("adminPin").value!==ADMIN_DEMO_PIN){alert("رمز الدخول التجريبي غير صحيح");return}document.getElementById("adminLogin").classList.add("hidden");document.getElementById("adminContent").classList.remove("hidden");renderAdminProducts();document.getElementById("adminSummary").textContent=`عدد الأصناف: ${adminProducts.length} · الأصناف المعروضة: ${adminProducts.filter(p=>p.enabled!==false).length}`;}
+function adminTab(tab){["manage","orders","stats"].forEach(x=>document.getElementById("admin"+x[0].toUpperCase()+x.slice(1)).classList.toggle("hidden",x!==tab));}
+function renderAdminProducts(){document.getElementById("adminProducts").innerHTML=adminProducts.map((p,i)=>`<div class="admin-product"><b>${p.name}</b><input aria-label="السعر" type="number" min="0" id="price${i}" value="${p.price}"><label style="margin:0"><input type="checkbox" id="enabled${i}" ${p.enabled!==false?"checked":""}> متاح</label></div>`).join("")}
+function saveAdminProducts(){adminProducts.forEach((p,i)=>{p.price=Math.max(0,Number(document.getElementById("price"+i).value)||0);p.enabled=document.getElementById("enabled"+i).checked;let original=products.find(x=>x.id===p.id);if(original){original.price=p.price;original.enabled=p.enabled}});localStorage.setItem("omdurman_products",JSON.stringify(adminProducts));renderProducts();alert("تم حفظ التعديلات على هذا الجهاز");}
+
+</script>
+</body></html>
